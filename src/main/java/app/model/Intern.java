@@ -1,9 +1,5 @@
 package app.model;
 
-import app.exception.BirthDayException;
-import app.service.ValidateData;
-
-import java.sql.Date;
 import java.util.Scanner;
 
 public class Intern extends Candidate{
@@ -80,7 +76,6 @@ public class Intern extends Candidate{
      */
     @Override
     public void updateBaseData(Candidate candidate) {
-        ValidateData validateData = new ValidateData();
         Scanner sc = new Scanner(System.in);
         super.updateBaseData(candidate);
         boolean check = true;

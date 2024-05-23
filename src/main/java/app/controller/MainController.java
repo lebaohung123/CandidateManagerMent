@@ -74,8 +74,7 @@ public class MainController {
             int choice = sc.nextInt();
             switch (choice){
                 case 1:
-                    Candidate experience = new Experience(1, "bu cus");
-                    System.out.println(experience.showInfo());
+                    Candidate experience = new Experience();
                     experience.inputBaseData(experience);
                     candidates.add(experience);
                     candidateDAO.addNew(experience);
@@ -85,11 +84,13 @@ public class MainController {
                     fresher.inputBaseData(fresher);
                     candidates.add(fresher);
                     candidateDAO.addNew(fresher);
+                    break;
                 case 3:
                     Candidate intern = new Intern();
                     intern.inputBaseData(intern);
                     candidates.add(intern);
                     candidateDAO.addNew(intern);
+                    break;
                 case 4:
                     check = false;
                     break;

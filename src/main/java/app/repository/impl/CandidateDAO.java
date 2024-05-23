@@ -212,7 +212,7 @@ public class CandidateDAO implements ICandidateRepository {
      */
     @Override
     public void getNewList() {
-        System.out.println("Ung vien vua nhap la: " + Candidate.getCandidateCount());
+        System.out.println("So ung vien vua nhap la: " + Candidate.getCandidateCount());
         if (newcandidatesList.size() <= 0){
             System.out.println("Khong co ung vien");
         }else {

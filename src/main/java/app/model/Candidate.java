@@ -23,6 +23,7 @@ public abstract class Candidate {
         this.email = email;
         this.candidateType = candidateType;
         this.certificatedId = certificatedId;
+        candidateCount++;
     }
 
     public String getCandidateId() {
@@ -76,10 +77,9 @@ public abstract class Candidate {
     public static int getCandidateCount() {
         return candidateCount;
     }
-
     public static void setCandidateCount(int candidateCount) {
         Candidate.candidateCount = candidateCount;
-    }
+    };
 
     public String getCertificatedId() {
         return certificatedId;
@@ -89,18 +89,8 @@ public abstract class Candidate {
         this.certificatedId = certificatedId;
     }
 
-    public Candidate(String candidateId, String fullName, String birthDay, String phone, String email, String certificatedId) {
-        this();
-        this.candidateId = candidateId;
-        this.fullName = fullName;
-        this.birthDay = birthDay;
-        this.phone = phone;
-        this.email = email;
-        this.certificatedId = certificatedId;
-    }
-
     public Candidate() {
-        candidateCount++;
+//        candidateCount++;
     }
 
     public abstract String showInfo();
@@ -116,6 +106,7 @@ public abstract class Candidate {
     }
 
     public void inputBaseData(Candidate candidate){
+        setCandidateCount(getCandidateCount() + 1);
         Scanner sc = new Scanner(System.in);
         ValidateData validateData = new ValidateData();
         System.out.println("Moi ban nhap candidateID: ");
