@@ -5,9 +5,9 @@ import app.model.Experience;
 import app.model.Fresher;
 import app.model.Intern;
 import app.repository.impl.CandidateDAO;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import app.utils.SortByCanTypeASCBirthDSC;
+
+import java.util.*;
 
 public class MainController {
     private static final CandidateDAO candidateDAO = new CandidateDAO();
@@ -23,6 +23,8 @@ public class MainController {
                 System.out.println("2. Up date thong tin nhan vien.");
                 System.out.println("3. Hien thi thong tin toan bo ung vien trong database.");
                 System.out.println("4. Danh sach ten cua nhan vien trong cty.");
+                System.out.println("5. Xoa nhan vien bang id.");
+                System.out.println("6. Danh sach nhan vien trong cong ty khong trung candidateID");
                 System.out.println("7. Thoat.");
                 System.out.println("------------------------------------------------------");
 
@@ -35,8 +37,8 @@ public class MainController {
 
                 switch (choice) {
                     case 1:
-                        nhapThongTin();
                         System.out.println("Nhap thong tin ung vien.");
+                        nhapThongTin();
                         break;
                     case 2:
                         suaThongTin();
@@ -46,6 +48,12 @@ public class MainController {
                         break;
                     case 4:
                         System.out.println(candidateDAO.getFullName());
+                        break;
+                    case 5:
+                        deleteById();
+                        break;
+                    case 6:
+                        dsNhanVienkhongTrungId();
                         break;
                     case 7:
                         System.out.println("Xin chao va hen gap lai!!!");
@@ -101,9 +109,16 @@ public class MainController {
     }
     public static void thongTinUngVien(){
         List<Candidate> candidates = candidateDAO.getAll();
-        if (!candidates.isEmpty()){
+        Map<String, Candidate> candidateMap = new LinkedHashMap<>();
+        for (Candidate candidate : candidates){
+            if (!candidateMap.containsKey(candidate.getCandidateId())){
+                candidateMap.put(candidate.getCandidateId(), candidate);
+            }
+        }
+        List<Candidate> candidateUnique = new ArrayList<>(candidateMap.values());
+         if (!candidates.isEmpty()){
             System.out.println("------------------------------------------------------");
-            for (Candidate c : candidates){
+            for (Candidate c : candidateUnique){
                 System.out.println(c.showInfo());
             }
             System.out.println("------------------------------------------------------");
@@ -122,6 +137,32 @@ public class MainController {
         }else{
             candidate.updateBaseData(candidate);
             candidateDAO.updateById(candidate);
+        }
+    }
+    public static void deleteById(){
+        Scanner sc = new Scanner(System.in);
+        try {
+            System.out.println("------------------------------------------------------");
+            System.out.println("Delete ung vien: ");
+            System.out.println("Moi ban nhap id ung vien muon xoa ");
+            String id = sc.nextLine();
+            candidateDAO.deleteByID(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void dsNhanVienkhongTrungId(){
+        List<Candidate> candidates = candidateDAO.getAll();
+        candidates.sort(new SortByCanTypeASCBirthDSC());
+        for (Candidate c : candidates){
+            System.out.println(c);
+        }
+        if (candidates.isEmpty()){
+            System.out.println("Khong co ung vien nao.");
+        }else {
+            for (Candidate c : candidates){
+                System.out.println(c);
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ public abstract class Candidate {
     private String birthDay;
     private String phone;
     private String email;
-    private int candidateType;
+    private Integer candidateType;
     public static int candidateCount = 0;
     private String certificatedId;
 
@@ -66,7 +66,7 @@ public abstract class Candidate {
         this.email = email;
     }
 
-    public int getCandidateType() {
+    public Integer getCandidateType() {
         return candidateType;
     }
 
@@ -113,10 +113,10 @@ public abstract class Candidate {
         candidate.setCandidateId(sc.nextLine());
         System.out.println("Moi ban nhap fullName: ");
         candidate.setFullName(sc.nextLine());
-        String birthDay = "";
+        String birthDay;
         do {
             try {
-                System.out.println("Moi ban nhap birthDay: ");
+                System.out.println("Moi ban nhap birthDay dinh dang dd/mm/yyy: ");
                 birthDay = sc.nextLine();
                 if (birthDay.isEmpty()) {
                     throw new BirthDayException("Khong duoc de trong birth day");
@@ -127,14 +127,16 @@ public abstract class Candidate {
                 }
             }catch (BirthDayException e){
                 System.out.println(e.getMessage());
+                birthDay = "";
             }catch (Exception e){
                 System.out.println("The system has encountered an unexpected problem, sincerely sorry !!!");
+                birthDay = "";
             }
         }while (!validateData.validateDate(birthDay));
         candidate.setBirthDay(birthDay);
         System.out.println("Moi ban nhap phone: ");
         candidate.setPhone(sc.nextLine());
-        String email = "";
+        String email;
         do {
             try {
                 System.out.println("Moi ban nhap email: ");
@@ -146,8 +148,10 @@ public abstract class Candidate {
                 }
             }catch (EmailException e){
                 System.out.println(e.getMessage());
+                email = "";
             }catch (Exception e){
                 System.out.println("The system has encountered an unexpected problem, sincerely sorry !!!");
+                email = "";
             }
         }while (!validateData.validateEmail(email));
         candidate.setEmail(email);

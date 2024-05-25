@@ -16,22 +16,22 @@ import java.util.List;
 
 public class CandidateDAO implements ICandidateRepository {
     List<Candidate> newcandidatesList = new ArrayList<>();
-    private ConnectDB connectDB = new ConnectDB();
+    private final ConnectDB connectDB = new ConnectDB();
     private final String INSERT_CANDIDATE =
             "INSERT INTO CANDIDATE(candidateId, fullName, birthDay, phone, email, candidateType, certificatedId, expInYear, proSkill, "
                     + "graduationDate, graduationRank, education, majors, semester, universityName) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String SHOW_ALL = "SELECT * FROM CANDIDATE";
     private final String SHOW_CANDIDATE_BY_ID = "SELECT * FROM CANDIDATE WHERE candidateId = ?";
     private final String CHECK_ID_EXIST = "SELECT * FROM CANDIDATE WHERE candidateId = ?";
+    private final String DeleteById = "DELETE FROM CANDIDATE WHERE candidateId = ?";
     /**
      * @return
      */
     @Override
     public boolean checkConnection() {
-        connectDB.getConnection();
+        ConnectDB.getConnection();
         return true;
     }
-
     /**
      * @param candidate
      */
@@ -219,6 +219,37 @@ public class CandidateDAO implements ICandidateRepository {
             for (Candidate candidate: newcandidatesList){
                 System.out.println(candidate.showInfo());
             }
+        }
+    }
+    /**
+     * @param id
+     */
+    @Override
+    public void deleteByID(String id) {
+        Connection connection = ConnectDB.getConnection();
+        int check = 0;
+        try {
+            assert connection != null;
+            PreparedStatement stmt = connection.prepareStatement(CHECK_ID_EXIST);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                check ++;
+            }
+            if (check > 0){
+                PreparedStatement deleteStmt = connection.prepareStatement(DeleteById);
+                deleteStmt.setString(1, id);
+                deleteStmt.executeUpdate();
+                System.out.println("Delete candidate with id: " + id + " successfully");
+
+            } else {
+                System.out.println("CandidateId not exixts");
+            }
+            connection.close();
+            stmt.close();
+        }catch (SQLException e){
+            System.err.println("The system has encountered an unexpected problem, sincerely sorry !!! ");
+            e.printStackTrace();
         }
     }
 }

@@ -12,4 +12,5 @@ public interface ICandidateRepository {
     void updateById(Candidate candidate);
     StringBuffer getFullName();
     void getNewList();
+    void deleteByID(String id);
 }
