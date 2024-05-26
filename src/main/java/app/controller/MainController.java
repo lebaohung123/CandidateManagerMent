@@ -12,6 +12,11 @@ import java.util.*;
 public class MainController {
     private static final CandidateDAO candidateDAO = new CandidateDAO();
     static List<Candidate> candidates = new ArrayList<>();
+    /**
+    *@author Le Bao Hung(HungLB4)
+    *@since 30/06/2024
+     * hàm chạy chương trình
+    */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean check = true;
@@ -20,7 +25,7 @@ public class MainController {
                 System.out.println("------------------------------------------------------");
                 System.out.println("Moi ban chon:");
                 System.out.println("1. Nhap thong tin ung vien.");
-                System.out.println("2. Up date thong tin nhan vien.");
+                System.out.println("2. Chinh sua thong tin nhan vien.");
                 System.out.println("3. Hien thi thong tin toan bo ung vien trong database.");
                 System.out.println("4. Danh sach ten cua nhan vien trong cty.");
                 System.out.println("5. Xoa nhan vien bang id.");
@@ -29,7 +34,6 @@ public class MainController {
                 System.out.println("------------------------------------------------------");
 
                 int choice = sc.nextInt();
-
                 while (choice < 1 && choice > 7){
                     System.out.println("Nhap lua chon cua ban .");
                     choice = sc.nextInt();
@@ -68,7 +72,11 @@ public class MainController {
             System.out.println("The system has encountered an unexpected problem, sincerely sorry !!!");
         }
     }
-
+    /**
+    *@author Le Bao Hung(HungLB4)
+    *@since 30/06/2024
+     * hàm nhập thông tin sinh viên
+    */
     public static void nhapThongTin(){
         Scanner sc = new Scanner(System.in);
         boolean check = true;
@@ -107,6 +115,11 @@ public class MainController {
             }
         }
     }
+    /**
+    *@author Le Bao Hung(HungLB4)
+    *@since 30/06/2024
+     * hàm hiển thị thông tin ứng viên
+    */
     public static void thongTinUngVien(){
         List<Candidate> candidates = candidateDAO.getAll();
         Map<String, Candidate> candidateMap = new LinkedHashMap<>();
@@ -126,6 +139,11 @@ public class MainController {
             System.out.println("Khong co ung vien nao >< ");
         }
     }
+    /**
+    *@author Le Bao Hung(HungLB4)
+    *@since 30/06/2024
+     *hàm sửa thông tin
+    */
     public static void suaThongTin(){
         Scanner sc = new Scanner(System.in);
         System.out.println("------------------------------------------------------");
@@ -139,6 +157,11 @@ public class MainController {
             candidateDAO.updateById(candidate);
         }
     }
+    /**
+    *@author Le Bao Hung(HungLB4)
+    *@since 30/06/2024
+     *hàm delete nhân viên
+    */
     public static void deleteById(){
         Scanner sc = new Scanner(System.in);
         try {
@@ -151,6 +174,11 @@ public class MainController {
             e.printStackTrace();
         }
     }
+    /**
+    *@author Le Bao Hung(HungLB4)
+    *@since 30/06/2024
+     *hàm lọc nhân viên không trùng id
+    */
     public static void dsNhanVienkhongTrungId(){
         List<Candidate> candidates = candidateDAO.getAll();
         candidates.sort(new SortByCanTypeASCBirthDSC());

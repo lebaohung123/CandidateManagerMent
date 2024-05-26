@@ -224,6 +224,8 @@ public class CandidateDAO implements ICandidateRepository {
     /**
      * @param id
      */
+
+
     @Override
     public void deleteByID(String id) {
         Connection connection = ConnectDB.getConnection();
@@ -252,4 +254,5 @@ public class CandidateDAO implements ICandidateRepository {
             e.printStackTrace();
         }
     }
+
 }
