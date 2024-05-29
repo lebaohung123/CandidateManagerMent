@@ -1,5 +1,7 @@
 package app.repository.impl;
 
+import app.utils.Log4jClass;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ public class ConnectDB {
             Class.forName(JDBC_DRIVER);
             Connection conn = DriverManager.getConnection(URL, USER, PW);
             System.out.println("KET NOI THANH CONG");
+            Log4jClass.info("Log info");
             return conn;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,6 +32,10 @@ public class ConnectDB {
             System.out.println("KET NOI THAT BAI");
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        getConnection();
     }
 
 }

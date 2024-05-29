@@ -8,20 +8,22 @@ import app.repository.impl.CandidateDAO;
 import app.utils.SortByCanTypeASCBirthDSC;
 
 import java.util.*;
+import java.util.logging.*;
 
 public class MainController {
     private static final CandidateDAO candidateDAO = new CandidateDAO();
     static List<Candidate> candidates = new ArrayList<>();
+
     /**
-    *@author Le Bao Hung(HungLB4)
-    *@since 30/06/2024
+     * @author Le Bao Hung(HungLB4)
+     * @since 30/06/2024
      * hàm chạy chương trình
-    */
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         boolean check = true;
         try {
-            while (check){
+            while (check) {
                 System.out.println("------------------------------------------------------");
                 System.out.println("Moi ban chon:");
                 System.out.println("1. Nhap thong tin ung vien.");
@@ -29,12 +31,12 @@ public class MainController {
                 System.out.println("3. Hien thi thong tin toan bo ung vien trong database.");
                 System.out.println("4. Danh sach ten cua nhan vien trong cty.");
                 System.out.println("5. Xoa nhan vien bang id.");
-                System.out.println("6. Danh sach nhan vien trong cong ty khong trung candidateID");
+                System.out.println("6. Danh sach nhan vien trong cong ty ACS candidatetype DESC birthday");
                 System.out.println("7. Thoat.");
                 System.out.println("------------------------------------------------------");
 
                 int choice = sc.nextInt();
-                while (choice < 1 && choice > 7){
+                while (choice < 1 && choice > 7) {
                     System.out.println("Nhap lua chon cua ban .");
                     choice = sc.nextInt();
                 }
@@ -68,19 +70,21 @@ public class MainController {
                         break;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("The system has encountered an unexpected problem, sincerely sorry !!!");
         }
     }
+
     /**
-    *@author Le Bao Hung(HungLB4)
-    *@since 30/06/2024
+     * @author Le Bao Hung(HungLB4)
+     * @since 30/06/2024
      * hàm nhập thông tin sinh viên
-    */
-    public static void nhapThongTin(){
+     */
+    public static void nhapThongTin() {
         Scanner sc = new Scanner(System.in);
         boolean check = true;
-        while (check){
+        while (check) {
             System.out.println("------------------------------------------------------");
             System.out.println("1. Experience");
             System.out.println("2. Fresher");
@@ -88,7 +92,7 @@ public class MainController {
             System.out.println("4. Thoat nhap thong tin.");
             System.out.println("------------------------------------------------------");
             int choice = sc.nextInt();
-            switch (choice){
+            switch (choice) {
                 case 1:
                     Candidate experience = new Experience();
                     experience.inputBaseData(experience);
@@ -115,54 +119,57 @@ public class MainController {
             }
         }
     }
+
     /**
-    *@author Le Bao Hung(HungLB4)
-    *@since 30/06/2024
+     * @author Le Bao Hung(HungLB4)
+     * @since 30/06/2024
      * hàm hiển thị thông tin ứng viên
-    */
-    public static void thongTinUngVien(){
+     */
+    public static void thongTinUngVien() {
         List<Candidate> candidates = candidateDAO.getAll();
         Map<String, Candidate> candidateMap = new LinkedHashMap<>();
-        for (Candidate candidate : candidates){
-            if (!candidateMap.containsKey(candidate.getCandidateId())){
+        for (Candidate candidate : candidates) {
+            if (!candidateMap.containsKey(candidate.getCandidateId())) {
                 candidateMap.put(candidate.getCandidateId(), candidate);
             }
         }
         List<Candidate> candidateUnique = new ArrayList<>(candidateMap.values());
-         if (!candidates.isEmpty()){
+        if (!candidates.isEmpty()) {
             System.out.println("------------------------------------------------------");
-            for (Candidate c : candidateUnique){
+            for (Candidate c : candidateUnique) {
                 System.out.println(c.showInfo());
             }
             System.out.println("------------------------------------------------------");
-        }else {
+        } else {
             System.out.println("Khong co ung vien nao >< ");
         }
     }
+
     /**
-    *@author Le Bao Hung(HungLB4)
-    *@since 30/06/2024
-     *hàm sửa thông tin
-    */
-    public static void suaThongTin(){
+     * @author Le Bao Hung(HungLB4)
+     * @since 30/06/2024
+     * hàm sửa thông tin
+     */
+    public static void suaThongTin() {
         Scanner sc = new Scanner(System.in);
         System.out.println("------------------------------------------------------");
         System.out.println("Moi ban nhap id ung vien muon sua ");
         String id = sc.nextLine();
         Candidate candidate = candidateDAO.getById(id);
-        if (candidate == null){
+        if (candidate == null) {
             System.out.println("Id khong hop le");
-        }else{
+        } else {
             candidate.updateBaseData(candidate);
             candidateDAO.updateById(candidate);
         }
     }
+
     /**
-    *@author Le Bao Hung(HungLB4)
-    *@since 30/06/2024
-     *hàm delete nhân viên
-    */
-    public static void deleteById(){
+     * @author Le Bao Hung(HungLB4)
+     * @since 30/06/2024
+     * hàm delete nhân viên
+     */
+    public static void deleteById() {
         Scanner sc = new Scanner(System.in);
         try {
             System.out.println("------------------------------------------------------");
@@ -170,25 +177,32 @@ public class MainController {
             System.out.println("Moi ban nhap id ung vien muon xoa ");
             String id = sc.nextLine();
             candidateDAO.deleteByID(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
-    *@author Le Bao Hung(HungLB4)
-    *@since 30/06/2024
-     *hàm lọc nhân viên không trùng id
-    */
-    public static void dsNhanVienkhongTrungId(){
+     * @author Le Bao Hung(HungLB4)
+     * @since 30/06/2024
+     * hàm lọc nhân viên không trùng id
+     */
+    public static void dsNhanVienkhongTrungId() {
         List<Candidate> candidates = candidateDAO.getAll();
-        candidates.sort(new SortByCanTypeASCBirthDSC());
-        for (Candidate c : candidates){
-            System.out.println(c);
-        }
-        if (candidates.isEmpty()){
+
+
+        if (candidates.isEmpty()) {
             System.out.println("Khong co ung vien nao.");
-        }else {
-            for (Candidate c : candidates){
+        } else {
+
+
+            for (Candidate c : candidates) {
+                System.out.println(c);
+            }
+            System.out.println("sau sort.");
+            candidates.sort(new SortByCanTypeASCBirthDSC());
+
+            for (Candidate c : candidates) {
                 System.out.println(c);
             }
         }

@@ -116,21 +116,17 @@ public abstract class Candidate {
         String birthDay;
         do {
             try {
-                System.out.println("Moi ban nhap birthDay dinh dang dd/mm/yyy: ");
+                System.out.println("Moi ban nhap birthDay dinh dang yyyy-mmm-dd: ");
                 birthDay = sc.nextLine();
                 if (birthDay.isEmpty()) {
                     throw new BirthDayException("Khong duoc de trong birth day");
-                } else if (Integer.parseInt(birthDay.substring(6, 10)) < 1900) {
-                    throw new BirthDayException("Nhap nam phai lon hon 1990");
-                } else if (!validateData.validateDate(birthDay)) {
-                    throw new BirthDayException("Nhap sai dinh dang ngay");
                 }
             }catch (BirthDayException e){
                 System.out.println(e.getMessage());
-                birthDay = "";
+                birthDay = null;
             }catch (Exception e){
                 System.out.println("The system has encountered an unexpected problem, sincerely sorry !!!");
-                birthDay = "";
+                birthDay = null;
             }
         }while (!validateData.validateDate(birthDay));
         candidate.setBirthDay(birthDay);

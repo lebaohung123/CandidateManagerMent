@@ -5,6 +5,7 @@ import app.model.Experience;
 import app.model.Fresher;
 import app.model.Intern;
 import app.repository.ICandidateRepository;
+import app.utils.Log4jClass;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,6 +42,7 @@ public class CandidateDAO implements ICandidateRepository {
         try {
             assert connection != null;
             PreparedStatement stmt = connection.prepareStatement(SHOW_ALL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            Log4jClass.info(SHOW_ALL);
             ResultSet rs = stmt.executeQuery();
             rs.moveToInsertRow();
             rs.updateString("candidateId", candidate.getCandidateId());
@@ -69,7 +71,7 @@ public class CandidateDAO implements ICandidateRepository {
             connection.close();
             newcandidatesList.add(candidate);
         }catch (Exception e){
-            e.printStackTrace();
+            Log4jClass.error(e.getMessage());
         }
         getNewList();
     }
@@ -84,6 +86,7 @@ public class CandidateDAO implements ICandidateRepository {
         try {
             assert connection != null;
             PreparedStatement stmt = connection.prepareStatement(SHOW_ALL);
+            Log4jClass.info(SHOW_ALL);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 candidate = getCandidate(candidate, rs);
@@ -93,7 +96,7 @@ public class CandidateDAO implements ICandidateRepository {
             stmt.close();
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log4jClass.error(e.getMessage());
         }
         return candidates;
     }
@@ -144,9 +147,10 @@ public class CandidateDAO implements ICandidateRepository {
             }
             connection.close();
             stmt.close();
+            Log4jClass.info(SHOW_CANDIDATE_BY_ID);
             return candidate;
         }catch (Exception e){
-            e.printStackTrace();
+            Log4jClass.error(e.getMessage());
         }
         return null;
     }
@@ -188,9 +192,10 @@ public class CandidateDAO implements ICandidateRepository {
             stmt.close();
             connection.close();
             System.out.println("Update thanh cong!!!");
+            Log4jClass.info(CHECK_ID_EXIST);
         }catch (SQLException e){
             System.err.println("The system has encountered an unexpected problem, sincerely sorry !!! ");
-            e.printStackTrace();
+            Log4jClass.error(e.getMessage());
         }
     }
 
@@ -249,9 +254,10 @@ public class CandidateDAO implements ICandidateRepository {
             }
             connection.close();
             stmt.close();
+            Log4jClass.info(CHECK_ID_EXIST);
         }catch (SQLException e){
             System.err.println("The system has encountered an unexpected problem, sincerely sorry !!! ");
-            e.printStackTrace();
+            Log4jClass.error(e.getMessage());
         }
     }
 
